@@ -1,14 +1,14 @@
-// Declara uma constante chamada "controle" e atribui a ela uma NodeList contendo 
-// todos os elementos do documento que possuem o atributo "data-controle".
+/* Declara uma constante chamada "controle" e atribui a ela uma NodeList contendo 
+todos os elementos do documento que possuem o atributo "data-controle".*/
 const controle = document.querySelectorAll("[data-controle]")
 
-// Declara uma constante chamada "estatisticas" e atribui a ela uma NodeList contendo 
-// todos os elementos do documento que possuem o atributo "data-estatistica".
+/* Declara uma constante chamada "estatisticas" e atribui a ela uma NodeList contendo 
+todos os elementos do documento que possuem o atributo "data-estatistica".*/
 const estatisticas = document.querySelectorAll("[data-estatistica]")
 
-// Define um objeto chamado "pecas" que contém várias propriedades, onde cada propriedade 
-// é uma peça do robô. Cada peça tem suas próprias propriedades, como "forca", "poder", 
-// "energia" e "velocidade", com valores numéricos associados a elas.
+/* Define um objeto chamado "pecas" que contém várias propriedades, onde cada propriedade 
+é uma peça do robô. Cada peça tem suas próprias propriedades, como "forca", "poder", 
+"energia" e "velocidade", com valores numéricos associados a elas.*/
 const pecas = {
     "bracos": {
         "forca": 29,
@@ -56,18 +56,20 @@ controle.forEach( (elemento) => {
 /* Seleciona o elemento dentro do "controle" que possui o atributo "data-contador" e armazena em uma constante chamada "peca". Em seguida, 
 verifica se a "operacao" é igual a "-", se for, subtrai 1 do valor de "peca.value", caso contrário, adiciona 1 ao valor de "peca.value". */
 function manipulaDados(operacao, controle) {
-    const peca = controle.querySelector("[data-contador]")
+    const peca = controle.querySelector("[data-contador]");
 
-    if(operacao === "-") {
-        peca.value = parseInt(peca.value) - 1
+    if (operacao === "-") {
+        peca.value = parseInt(peca.value) - 1;
+        atualizaEstatistica(evento.target.dataset.peca, -1); // Chamada da função com valor -1
     } else {
-        peca.value = parseInt(peca.value) + 1
+        peca.value = parseInt(peca.value) + 1;
+        atualizaEstatistica(evento.target.dataset.peca, 1); // Chamada da função com valor 1
     }
 }
 
 /* Percorre todos os elementos da NodeList "estatisticas". Para cada elemento, atualiza o seu texto interno (textContent) somando o valor numérico correspondente à propriedade do objeto "pecas" relacionada à "peca" e à propriedade "data-estatistica" do elemento. */
-function atualizaEstatistica(peca) {
-    estatisticas.forEach( (elemento ) => {
-        elemento.textContent = parseInt(elemento.textContent) + pecas[peca][elemento.dataset.estatistica]
-    })
+function atualizaEstatistica(peca, valor) {
+    estatisticas.forEach((elemento) => {
+        elemento.textContent = parseInt(elemento.textContent) + (pecas[peca][elemento.dataset.estatistica] * valor);
+    });
 }
